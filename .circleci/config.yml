@@ -6,17 +6,36 @@ jobs:
     steps:
       - checkout
       - run: echo "Hello World from circleci"
-  test:
+  parallel-test1:
     docker:
       - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: echo "Testing Hello World from Circle CI"
+      - run: echo "Testing Hello Parallel Test1"
+  parallel-test2:
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout
+      - run: echo "Testing Hello Parallel Test2"
+  deploy:
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout
+      - run: echo "Testing Hello Parallel Test3"
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
-      - test:
+      - parallel-test1:
           requires:
             - build
+      - parallel-test2:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - parallel-test1
+            - parallel-test2
