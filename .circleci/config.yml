@@ -23,7 +23,7 @@ jobs:
       - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: echo "Testing Hello Parallel Test3"
+      - run: echo "Deploying Now"
 workflows:
   version: 2
   build_and_test:
